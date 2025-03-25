@@ -22,6 +22,7 @@ def __init__(_decimals: uint8, _initialAnswer: int256):
     self.updateAnswer(_initialAnswer)
 
 
+
 @internal
 def updateAnswer(_answer: int256):
     self.latestAnswer = _answer
