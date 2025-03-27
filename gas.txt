@@ -1,0 +1,10 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.9, pytest-8.3.5, pluggy-1.5.0
+rootdir: /root/updraft-python/mox-buy-coffee
+configfile: pyproject.toml
+plugins: cov-6.0.0, xdist-3.6.1, titanoboa-0.2.5, hypothesis-6.127.9
+collected 8 items
+
+tests/unit/test_unit_coffee.py ........                                  [100%]
+
+============================== 8 passed in 0.14s ===============================

@@ -3,6 +3,10 @@ src = "src"
 
 [networks.contracts.price_feed]
 deployer_script = "deploy_mocks"
+abi = "mock_v3_aggregator"
+
+[networks.contracts.coffee]
+deployer_script = "deploy"
 
 [networks.sepolia]
 url = "$SEPOLIA_RPC_URL"
@@ -10,6 +14,11 @@ save_to_db = false
 default_account_name = "default"
 explorer_uri = "https://eth-sepolia.blockscout.com/"
 explorer_type = "blockscout"
+
+[networks.anvil]
+url = "http://127.0.0.1:8545"
+default_account_name = "anvil0"
+save_to_db = true
 
 
 

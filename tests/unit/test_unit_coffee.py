@@ -85,3 +85,7 @@ def test_multiple_funders_and_withdraw(coffee, account):
     # 4. Verify funders array is empty by checking index 0 reverts
     with boa.reverts():
         coffee.funders(0)
+
+
+def test_get_rate(coffee):
+    assert coffee.get_eth_to_usd_rate(SEND_VALUE) > 0
