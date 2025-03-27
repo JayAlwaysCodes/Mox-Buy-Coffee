@@ -89,3 +89,45 @@ def test_multiple_funders_and_withdraw(coffee, account):
 
 def test_get_rate(coffee):
     assert coffee.get_eth_to_usd_rate(SEND_VALUE) > 0
+
+def test_fund_exact_minimum_value(coffee, account, eth_usd):
+    """Test funding with exactly the minimum required USD value"""
+    # Get current ETH price (returns price with 8 decimals)
+    _, price, _, _, _ = eth_usd.latestRoundData()
+    
+    # Calculate exact ETH needed (MINIMUM_USD is in wei units)
+    # Formula: (min_usd * 1e18) / (price * 1e10) since:
+    # - MINIMUM_USD is in wei (1e18)
+    # - price has 8 decimals (1e8)
+    # - Need to convert to wei (1e18)
+    min_eth_wei = (coffee.MINIMUM_USD() * 10**18) // (price * 10**10)
+    
+    # Ensure we have an integer value
+    assert isinstance(min_eth_wei, int)
+    
+    boa.env.set_balance(account.address, min_eth_wei)
+    with boa.env.prank(account.address):
+        coffee.fund(value=min_eth_wei)
+    
+    assert coffee.funders(0) == account.address
+
+def test_fund_just_below_minimum(coffee, account, eth_usd):
+    """Test funding with value just below minimum"""
+    _, price, _, _, _ = eth_usd.latestRoundData()
+    
+    # Calculate minimum ETH in wei
+    min_eth_wei = (coffee.MINIMUM_USD() * 10**18) // (price * 10**10)
+    
+    # Calculate just below (99% of min)
+    just_below = (min_eth_wei * 99) // 100
+    
+    # Ensure we have integer values
+    assert isinstance(min_eth_wei, int)
+    assert isinstance(just_below, int)
+    
+    boa.env.set_balance(account.address, just_below)
+    with boa.env.prank(account.address):
+        with boa.reverts("You need to spend more ETH"):
+            coffee.fund(value=just_below)
+
+
