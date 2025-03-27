@@ -182,3 +182,7 @@ anvil-zksync.log
 
 .env
 uv.lock
+recap.md 
+gas.txt
+.vscode
+.covergerc
