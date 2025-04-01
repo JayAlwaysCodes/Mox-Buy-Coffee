@@ -186,3 +186,6 @@ recap.md
 gas.txt
 .vscode
 .covergerc
+moccasin.toml
+pyproject.toml
+update.html
